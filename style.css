@@ -27,7 +27,9 @@ time, mark, audio, video {
     margin: 0 auto;
     background-color: #04B45F;
 }
-
+.head {
+    height: 50px;
+}
 .head .head-status {
     cursor: pointer;
     font-weight: bold;
@@ -55,8 +57,9 @@ time, mark, audio, video {
     width: 100%;
     min-height: 80vh;
     background-color: #EFFBF5;
-    float: left;
+    overflow: auto;
 }
+
 .search-bar-container {
     width: 70%;
     margin: 10px auto;
@@ -70,4 +73,35 @@ time, mark, audio, video {
     position: absolute;
     top: 2px;
     left: 5px;
+}
+.stream-each {
+    height: 70px;
+    background-color: orange;
+    border-top: 1px solid #04B45F;
+    border-bottom: 1px solid #04B45F;
+}
+.stream-each div {
+    height: 100%;
+    float: left;
+}
+.stream-each .left {
+    width: 70px;
+}
+.stream-each .mid {
+    width: -webkit-calc(100% - 140px);
+    width: -moz-calc(100% - 140px);
+    width: calc(100% - 140px);
+}
+.stream-each .right {
+    width: 70px;
+}
+.foot {
+    overflow: auto;
+    color: #EFFBF5;
+    text-align: center;
+    font-weight: bold;
+}
+.foot .info {
+    display: block;
+    margin-top: 20px;
 }
