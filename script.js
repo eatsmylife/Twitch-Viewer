@@ -7,58 +7,68 @@
 //angrypug
 //failverde
 //gamesdonequick
+//mistakefatal
+function getChannelInfo() {
+    var channels = ["colalin", "angrypug", "failverde", "gamesdonequick", "mistakefatal"];
+
+    channels.forEach(function (channel) {
+
+        function makeURL(type, name) {
+            return 'https://wind-bow.gomix.me/twitch-api/' + type + '/' + name + '?callback=?';
+        }
+
+        $.getJSON(makeURL("streams", channel), function (data) {
+            console.log(data);
+            var game, status;
+            if (data.stream === null) {
+                game = "Offline";
+                status = "offline";
+            } else {
+                game = data.stream.game;
+                status = "online";
+            }
+            $.getJSON(makeURL("channels", channel), function (data) {
+                var name;
+                name = data.display_name ? data.display_name : data.name;
+                //name
+                //game
+                //status
+                //data.logo
+                console.log(name);
+                console.log(game);
+                console.log(status);
+                console.log(data.logo);
+
+                var html;
+
+                if (status === "online") {
+                    html = '<div class="stream-each online">' + '<div class="left">' + '<img src="' + data.logo + '" />' + '</div><div class="mid"><span class="channel">' + name + '</span><br/><span="game">' + game + '</span></div>' + '<div class="right"><span class="status">' + status + '</span></div>';
+                    $(".streams").prepend(html);
+                } else if (status === "offline") {
+                    html = '<div class="stream-each offline">' + '<div class="left">' + '<img src="' + data.logo + '" />' + '</div><div class="mid"><span class="channel">' + name + '</span><br/><span="game">' + game + '</span></div>' + '<div class="right"><span class="status">' + status + '</span></div>';
+                    $(".streams").append(html);
+                }
+            });
+        });
+    });
+}
+
 
 $(document).ready(function () {
+    getChannelInfo();
     //status select
     $(".head-status").click(function () {
         $(this).addClass("head-status-selected").siblings().removeClass("head-status-selected");
     });
-
-    //load streams
-    var streamers = ["colalin", "angrypug", "failverde", "gamesdonequick", "mistakefatal"];
-
-    //fuck it! i is still 5.
-    for (i = 0; i < streamers.length; i++) {
-        $.getJSON('https://api.twitch.tv/kraken/streams/' + streamers[i] + '?client_id=5j0r5b7qb7kro03fvka3o8kbq262wwm', function (result) {
-            if (result.stream == null) {
-                //THEY ARE OFFLINE DO WHATEVER HERE
-                console.log(i, "is OFFLINE");
-            } else {
-                //THEY ARE ONLINE DO WHATEVER HERE
-                console.log(i, "is ONLINE");
-            }
-        });
-    }
-
-
-
-    //似乎 success function 會在所有的ajax跑過才執行，所以永遠都是5....
-    /*
-        for (var i = 0; i < streamers.length; i++) {
-            console.log(i);
-            $.ajax({
-                url: "https://api.twitch.tv/kraken/streams/" + streamers[i] + "?client_id=5j0r5b7qb7kro03fvka3o8kbq262wwm",
-                success: function (result) {
-                    console.log(i);
-                    //online
-                    if (result.stream !== null) {
-                        console.log(result);
-                        console.log(result.stream.channel.logo);
-                    } else {
-                        //offline                    
-                        $.ajax({
-                            url: "https://api.twitch.tv/kraken/channels/" + streamers[i] + "?client_id=5j0r5b7qb7kro03fvka3o8kbq262wwm",
-                            success: function (result) {
-                                console.log(result);
-                                console.log(result.logo);
-                            }
-                        });
-                        
-                    }
-                }
-            });
-        }
-    */
-
-
+    $(".head-status.all").click(function () {
+        $(".stream-each").show();
+    });
+    $(".head-status.online").click(function () {
+        $(".stream-each.offline").hide();
+        $(".stream-each.online").show();
+    });
+    $(".head-status.offline").click(function () {
+        $(".stream-each.online").hide();
+        $(".stream-each.offline").show();
+    });
 });
