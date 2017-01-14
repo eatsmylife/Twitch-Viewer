@@ -13,7 +13,9 @@ function getChannelInfo() {
 
     for (var i = 0; i < channels.length; i++) {
 
-        (function (index) {
+        closure();
+        //because closure function is called. so this is function will run for sure
+        function closure (index = i) {
 
             function makeURL(type, name) {
                 return 'https://wind-bow.gomix.me/twitch-api/' + type + '/' + name + '?callback=?';
@@ -43,7 +45,7 @@ function getChannelInfo() {
                     }
                 });
             });
-        })(i);
+        };
     }
     /*
         channels.forEach(function (channel) {
