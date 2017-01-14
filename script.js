@@ -11,47 +11,73 @@
 function getChannelInfo() {
     var channels = ["colalin", "angrypug", "failverde", "gamesdonequick", "mistakefatal"];
 
-    channels.forEach(function (channel) {
+    for (var i = 0; i < channels.length; i++) {
 
-        function makeURL(type, name) {
-            return 'https://wind-bow.gomix.me/twitch-api/' + type + '/' + name + '?callback=?';
-        }
+        (function (index) {
 
-        $.getJSON(makeURL("streams", channel), function (data) {
-            console.log(data);
-            var game, status;
-            if (data.stream === null) {
-                game = "Offline";
-                status = "offline";
-            } else {
-                game = data.stream.game;
-                status = "online";
+            function makeURL(type, name) {
+                return 'https://wind-bow.gomix.me/twitch-api/' + type + '/' + name + '?callback=?';
             }
-            $.getJSON(makeURL("channels", channel), function (data) {
-                var name;
-                name = data.display_name ? data.display_name : data.name;
-                //name
-                //game
-                //status
-                //data.logo
-                console.log(name);
-                console.log(channel);
-                console.log(game);
-                console.log(status);
-                console.log(data.logo);
 
-                var html;
-
-                if (status === "online") {
-                    html = '<a href="https://www.twitch.tv/' + channel + '" target="_blank"' + '<div class="stream-each online">' + '<div class="left">' + '<img src="' + data.logo + '" />' + '</div><div class="mid"><span class="channel">' + name + '</span><br/><span="game">' + game + '</span></div>' + '<div class="right"><span class="status">' + status + '</span></div>' + '</a>';
-                    $(".streams").prepend(html);
-                } else if (status === "offline") {
-                    html = '<a href="https://www.twitch.tv/' + channel + '" target="_blank"' + '<div class="stream-each offline">' + '<div class="left">' + '<img src="' + data.logo + '" />' + '</div><div class="mid"><span class="channel">' + name + '</span><br/><span="game">' + game + '</span></div>' + '<div class="right"><span class="status">' + status + '</span></div>' + '</a>';
-                    $(".streams").append(html);
+            $.getJSON(makeURL("streams", channels[index]), function (data) {
+                console.log(channels[index]);
+                var game, status;
+                if (data.stream === null) {
+                    game = "Offline";
+                    status = "offline";
+                } else {
+                    game = data.stream.game;
+                    status = "online";
                 }
+                $.getJSON(makeURL("channels", channels[index]), function (data) {
+                    var name;
+                    name = data.display_name ? data.display_name : data.name;
+                    var html;
+
+                    if (status === "online") {
+                        html = '<a href="https://www.twitch.tv/' + channels[index] + '" target="_blank"' + '<div class="stream-each online">' + '<div class="left">' + '<img src="' + data.logo + '" />' + '</div><div class="mid"><span class="channel">' + name + '</span><br/><span="game">' + game + '</span></div>' + '<div class="right"><span class="status">' + status + '</span></div>' + '</a>';
+                        $(".streams").prepend(html);
+                    } else if (status === "offline") {
+                        html = '<a href="https://www.twitch.tv/' + channels[index] + '" target="_blank"' + '<div class="stream-each offline">' + '<div class="left">' + '<img src="' + data.logo + '" />' + '</div><div class="mid"><span class="channel">' + name + '</span><br/><span="game">' + game + '</span></div>' + '<div class="right"><span class="status">' + status + '</span></div>' + '</a>';
+                        $(".streams").append(html);
+                    }
+                });
             });
-        });
-    });
+        })(i);
+    }
+    /*
+        channels.forEach(function (channel) {
+    
+            function makeURL(type, name) {
+                return 'https://wind-bow.gomix.me/twitch-api/' + type + '/' + name + '?callback=?';
+            }
+    
+            $.getJSON(makeURL("streams", channel), function (data) {
+                console.log(data);
+                console.log(channel);
+                var game, status;
+                if (data.stream === null) {
+                    game = "Offline";
+                    status = "offline";
+                } else {
+                    game = data.stream.game;
+                    status = "online";
+                }
+                $.getJSON(makeURL("channels", channel), function (data) {
+                    var name;
+                    name = data.display_name ? data.display_name : data.name;
+                    var html;
+    
+                    if (status === "online") {
+                        html = '<a href="https://www.twitch.tv/' + channel + '" target="_blank"' + '<div class="stream-each online">' + '<div class="left">' + '<img src="' + data.logo + '" />' + '</div><div class="mid"><span class="channel">' + name + '</span><br/><span="game">' + game + '</span></div>' + '<div class="right"><span class="status">' + status + '</span></div>' + '</a>';
+                        $(".streams").prepend(html);
+                    } else if (status === "offline") {
+                        html = '<a href="https://www.twitch.tv/' + channel + '" target="_blank"' + '<div class="stream-each offline">' + '<div class="left">' + '<img src="' + data.logo + '" />' + '</div><div class="mid"><span class="channel">' + name + '</span><br/><span="game">' + game + '</span></div>' + '<div class="right"><span class="status">' + status + '</span></div>' + '</a>';
+                        $(".streams").append(html);
+                    }
+                });
+            });
+        });*/
 }
 
 
