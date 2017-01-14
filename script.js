@@ -35,6 +35,7 @@ function getChannelInfo() {
                 //status
                 //data.logo
                 console.log(name);
+                console.log(channel);
                 console.log(game);
                 console.log(status);
                 console.log(data.logo);
@@ -42,10 +43,10 @@ function getChannelInfo() {
                 var html;
 
                 if (status === "online") {
-                    html = '<div class="stream-each online">' + '<div class="left">' + '<img src="' + data.logo + '" />' + '</div><div class="mid"><span class="channel">' + name + '</span><br/><span="game">' + game + '</span></div>' + '<div class="right"><span class="status">' + status + '</span></div>';
+                    html = '<a href="https://www.twitch.tv/' + channel + '" target="_blank"' + '<div class="stream-each online">' + '<div class="left">' + '<img src="' + data.logo + '" />' + '</div><div class="mid"><span class="channel">' + name + '</span><br/><span="game">' + game + '</span></div>' + '<div class="right"><span class="status">' + status + '</span></div>' + '</a>';
                     $(".streams").prepend(html);
                 } else if (status === "offline") {
-                    html = '<div class="stream-each offline">' + '<div class="left">' + '<img src="' + data.logo + '" />' + '</div><div class="mid"><span class="channel">' + name + '</span><br/><span="game">' + game + '</span></div>' + '<div class="right"><span class="status">' + status + '</span></div>';
+                    html = '<a href="https://www.twitch.tv/' + channel + '" target="_blank"' + '<div class="stream-each offline">' + '<div class="left">' + '<img src="' + data.logo + '" />' + '</div><div class="mid"><span class="channel">' + name + '</span><br/><span="game">' + game + '</span></div>' + '<div class="right"><span class="status">' + status + '</span></div>' + '</a>';
                     $(".streams").append(html);
                 }
             });

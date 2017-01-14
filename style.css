@@ -80,6 +80,9 @@ time, mark, audio, video {
     border-top: 1px solid white;
     border-bottom: 1px solid white;
 }
+.streams a {
+    display: block;
+}
 .stream-each div {
     height: 100%;
     float: left;
